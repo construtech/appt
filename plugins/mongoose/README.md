@@ -1,22 +1,12 @@
 
-# Appt
-A lightweight *exo-framework* for *ready-to-go* **NodeJs** applications.
 
-
-## What?!
-This document will introduce the `@appt/mongoose` plugin package. We assume you got here after seeing the [Appt's Main](https://github.com/brab0/appt) page. If you don't, **we strongly recommend** you to step back an take a 5 minutes reading to get used with some concepts we're going to apply here.
+# @appt/mongoose
+This is a plugin made for Appt that wraps [Mongoose ODM](https://www.npmjs.com/package/mongoose) to work into the *Appt's ecosystem* with advanced *database models and schemes*. 
+We assume you got here after seeing the [Appt's Main Page](https://github.com/brab0/appt). If you don't, **we strongly recommend** you to step back an take a 5 minutes reading to get used with some key concepts we're going to apply here.
 
 
 ## Install
     $ npm install @appt/mongoose --save
-
-    
-## @appt/mongoose
-This is a plugin made for the Mongoose ODM that wraps it to works into the Appt's ecosystem.
-
-## Third-Party
-We don't want re-invent the wheel! Thanks to these amazing packages out there we can go straight to the point. 
-By now, we're using(wrapping) only [Mongoose](https://www.npmjs.com/package/mongoose) for advanced database models and schemes;
 
  
 ## Resources
@@ -32,6 +22,7 @@ import {
 ```
 
 ### Mongoose
+At the example below, we have a component that needs to act as a database connector of an application. By default, an Appt component is just a class with a "signature" that it can be injected by other class. As our component here needs to a specific behavior, we need to make use of a *Special-Type Extender* called *TDatabase*. This special type makes part of the [@appt/core](https://github.com/brab0/appt/tree/master/core) package and it indicates our component should act as a database connector but also, it does not know *how or which kind of database to connect*? To this point we need to use a *"driver"*, which here is the *"Mongoose"*.  As the simple usage below shows, after `use` the Mongoose driver, you only need to provide the `uri` connection. If you need a little more configuration, you can set if you want to debug the connection *(default: false)* or even pass into options attribute any param allowed by the mongoose connection.
 ```javascript
 import { ApptComponent, TDatabase } from '@appt/core';
 import { Mongoose } from '@appt/mongoose';
@@ -42,7 +33,10 @@ import { Mongoose } from '@appt/mongoose';
 		use: [Mongoose],
 		config: {
 			uri: 'mongodb://localhost:27017/appt-demo',
-			options: {}
+			debug:  true,
+			options: {
+				keepAlive: true
+			}
 		}
 	}
 })
